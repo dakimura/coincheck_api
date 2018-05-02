@@ -35,11 +35,11 @@ class Client:
     def get_account_balance(self):
         return self.execute_api("/api/accounts/balance", "GET", is_private=True)
 
-    def execute_api(self, path, method, *, is_private):
+    def execute_api(self, path, method, is_private):
         """
         :param path: API path (e.g. /api/ticker )
         :param method: HTTP method in string. "GET", "POST", "PUT", "DELETE"
-        :param is_private_api: boolean. True if this API needs authentication
+        :param is_private: boolean. True if this API needs authentication
         :return: response in json-deserialized dictionary object
         """
         url = Client.base_url + path

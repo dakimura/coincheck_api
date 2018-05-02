@@ -4,7 +4,7 @@ import hmac
 import hashlib
 
 
-def create_auth_headers(url, *, access_key, secret):
+def create_auth_headers(url, access_key, secret):
     """
     get HTTP headers for API authentication
     :param url: API url. (e.g. https://coincheck.com/api/accounts/balance )

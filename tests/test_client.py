@@ -16,7 +16,7 @@ class TestAccount(unittest.TestCase):
         rate = self.client.get_sale_rate("btc_jpy")
         self.assertTrue( isinstance(rate, float))
 
-        #self.assertGreater( rate, 1800000.0, "please...")
+        # self.assertGreater( rate, 1800000.0, "please...")
 
     def test_get_account_balance(self):
         response = self.client.get_account_balance()
