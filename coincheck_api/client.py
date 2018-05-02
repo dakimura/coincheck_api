@@ -2,9 +2,9 @@
 import requests
 import json
 from coincheck_api.exception import CoinCheckApiException
-from coincheck_api.logger import get_module_logger
 import coincheck_api.auth
-logger = get_module_logger(__name__)
+from logging import getLogger
+logger = getLogger(__name__)
 
 
 class Client:

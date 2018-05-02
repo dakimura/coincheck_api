@@ -1,15 +1,16 @@
 import sys,os
 import unittest
-
-# add root dir of this module to classpath
-#sys.path.append(os.path.dirname(os.path.abspath(__file__)) +"/../")
 from coincheck_api import Client, settings
+import logging
 
 
 class TestAccount(unittest.TestCase):
     """Test class of client.py
     """
     def setUp(self):
+        logging.basicConfig(
+            format='[%(asctime)s - %(name)s - %(levelname)s] %(message)s',
+            level=logging.DEBUG)
         self.client = Client(settings.access_key, settings.secret)
 
     def test_get_sale_rate(self):
