@@ -1,0 +1,1 @@
+from coincheck_api.client import Client
