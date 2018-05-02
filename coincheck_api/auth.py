@@ -12,7 +12,7 @@ def create_auth_headers(url, access_key, secret):
     :param secret: Secret Access Key string for API authentication
     :return: HTTP header dictionary
     """
-    current_millis = str(round(time.time() * 1000))
+    current_millis = str(int(round(time.time() * 1000)))
     message = current_millis + url
     signature = hmac.new(secret.encode("utf-8"), message.encode("utf-8"), hashlib.sha256).hexdigest()
     headers = {
