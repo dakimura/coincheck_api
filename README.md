@@ -4,7 +4,10 @@ A simple python library to use CoinCheck API
 ## Usage
 
 ```buildoutcfg
-$ pip install git+https://github.com/dakimura/coincheck_api.git
+
+$  pip install coincheck_api
+# or 
+# $  pip install git+https://github.com/dakimura/coincheck_api.git
 $ python
 >>> from coincheck_api import Client
 >>> client = Client(access_key="foo", secret="bar")

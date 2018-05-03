@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
-import time
-import hmac
 import hashlib
+import hmac
+import time
 
 
 def create_auth_headers(url, access_key, secret):

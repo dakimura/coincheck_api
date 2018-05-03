@@ -1,9 +1,12 @@
 # -*- coding:utf-8 -*-
-import requests
 import json
-from coincheck_api.exception import CoinCheckApiException
-import coincheck_api.auth
 from logging import getLogger
+
+import requests
+
+import coincheck_api.auth
+from coincheck_api.exception import CoinCheckApiException
+
 logger = getLogger(__name__)
 
 
@@ -30,7 +33,23 @@ class Client:
         :return: rate value in floating value.
         """
         response = self.execute_api("/api/rate/{}".format(pair), "GET", is_private=False)
-        return float( response["rate"] )
+        return float(response["rate"])
+
+    def get_btc_ticker(self):
+        """
+        get ticker information of Bitcoin
+        :return: ticker information of Bitcoin
+        """
+        return self.execute_api("/api/ticker", "GET", is_private=False)
+
+    def get_trades(self, pair="btc_jpy"):
+        """
+
+        :param pair: currency pair joined by underscore. At the timing of 2018/05,
+        only "btc_jpy" is supported.
+        :return:
+        """
+        return self.execute_api("/api/trades?pair={}".format(pair), "GET", is_private=False)
 
     def get_account_balance(self):
         return self.execute_api("/api/accounts/balance", "GET", is_private=True)
@@ -44,20 +63,21 @@ class Client:
         """
         url = Client.base_url + path
         headers = None
-        if is_private :
+        if is_private:
             headers = coincheck_api.auth.create_auth_headers(
                 url,
-                access_key = self.access_key,
-                secret = self.secret)
-        logger.debug("HTTP call executed. {} {} {} {}".format(url, method, headers, is_private))
+                access_key=self.access_key,
+                secret=self.secret)
+        logger.debug("HTTP call executed. url={}, method={}, headers={} is_private={}"
+                     .format(url, method, headers, is_private))
 
         # execute an HTTP call
         response = requests.request(method, url, headers=headers)
-        logger.debug("HTTP status code of response={} {}".format(response.status_code, response.content) )
+        logger.debug("HTTP status code of response={} {}".format(response.status_code, response.content))
 
-        response_body = json.loads( response.content )
+        response_body = json.loads(response.content)
         # success
-        if 200 <= response.status_code < 400 :
+        if 200 <= response.status_code < 400:
             return response_body
         # failure
         else:
@@ -65,4 +85,3 @@ class Client:
                 "API execute failure. response status_code={}, headers={}, body={}".format(
                     response.status_code, response.headers, response.content
                 ))
-
