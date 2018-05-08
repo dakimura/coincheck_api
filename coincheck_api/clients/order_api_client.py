@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+import json
 from logging import getLogger
 
 from coincheck_api.clients.private_api_client import PrivateApiClient
@@ -175,13 +176,15 @@ class OrderApiClient(PrivateApiClient):
         if stop_loss_rate is not None:
             data["stop_loss_rate"] = stop_loss_rate
 
-        if not dry_run:
+        if dry_run:
+            logger.info("[dry run] order is executed. request data={}".format(json.dumps(data)))
+            return {"success": True, "id": 12345, "rate": str(rate), "amount": str(amount),
+                    "order_type": order_type, "stop_loss_rate": stop_loss_rate, "pair": pair,
+                    "created_at": "2015-01-10T05:55:38.000Z"}
+        else:
             response = self.execute_private_api("/api/exchange/orders", "POST", data=data)
             logger.info("order is executed. request data={}".format(data))
             return response
-        else:
-            logger.info("[dry run] order is executed. request data={}".format(data))
-            return
 
     def get_open_orders(self):
         """
@@ -205,19 +208,29 @@ class OrderApiClient(PrivateApiClient):
         """
         return self.execute_private_api("/api/exchange/orders/transactions", "GET")
 
-    def get_order_transactions_pagination(self):
+    def get_order_transactions_pagination(self, limit=None, order=None, start_id=None, end_id=None):
         """
         get recent orders' information with pagination functionality
+        :param limit: the number of items to get
+        :param order: "desc" or "asc"
+        :param start_id: get items after the id
+        :param end_id: get items before the id
         :return: recent orders' information
         """
-        return self.execute_private_api("/api/exchange/orders/transactions_pagination", "GET")
+        data = {"limit": limit, "order": order, "starting_after": start_id, "ending_before": end_id}
+        return self.execute_private_api("/api/exchange/orders/transactions_pagination", "GET", data=data)
 
-    def get_leverage_positions(self, status):
+    def get_leverage_positions(self, status, limit=None, order=None, start_id=None, end_id=None):
         """
-        get positions in a certain status
+        get positions in a certain status with pagination functionality
         :param status: "open" or "closed"
+        :param limit: the number of items to get
+        :param order: "desc" or "asc"
+        :param start_id: get items after the id
+        :param end_id: get items before the id
         :return: positions in a certain status
         """
         if status not in ["open", "closed"]:
             raise CoinCheckApiException("status should be \"open\" or \"closed\".")
-        return self.execute_private_api("/api/exchange/leverage/positions", "GET")
+        data = {"limit": limit, "order": order, "starting_after": start_id, "ending_before": end_id}
+        return self.execute_private_api("/api/exchange/leverage/positions", "GET", data=data)

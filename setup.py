@@ -2,15 +2,15 @@
 
 from setuptools import setup, find_packages
 
-with open('README.md') as f:
+with open('README.md', encoding="utf-8") as f:
     readme = f.read()
 
-with open('LICENSE') as f:
+with open('LICENSE', encoding="utf-8") as f:
     license = f.read()
 
 setup(
     name='coincheck_api',
-    version='0.5.0',
+    version='0.6.0',
     description='A simple library to use CoinCheck API',
     long_description=readme,
     author='dakimura',

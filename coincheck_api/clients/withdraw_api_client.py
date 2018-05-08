@@ -40,12 +40,17 @@ class WithdrawApiClient(PrivateApiClient):
         """
         return self.execute_private_api("/api/bank_accounts/{}".format(bank_id), "DELETE")
 
-    def get_withdraws(self):
+    def get_withdraws(self, limit=None, order=None, start_id=None, end_id=None):
         """
-        get history of requests to withdraw JPY
+        get history of requests to withdraw JPY with pagination functionality
+        :param limit: the number of items to get
+        :param order: "desc" or "asc"
+        :param start_id: get items after the id
+        :param end_id: get items before the id
         :return: history of requests to withdraw JPY
         """
-        return self.execute_private_api("/api/withdraws", "GET")
+        data = {"limit": limit, "order": order, "starting_after": start_id, "ending_before": end_id}
+        return self.execute_private_api("/api/withdraws", "GET", data=data)
 
     def request_withdraw(self, bank_account_id, amount, currency="JPY"):
         """

@@ -4,7 +4,7 @@ import hmac
 import time
 
 
-def create_auth_headers(url, access_key, secret):
+def create_auth_headers(url, access_key, secret, body=None):
     """
     get HTTP headers for API authentication
     :param url: API url. (e.g. https://coincheck.com/api/accounts/balance )
@@ -13,7 +13,7 @@ def create_auth_headers(url, access_key, secret):
     :return: HTTP header dictionary
     """
     current_millis = str(int(round(time.time() * 1000)))
-    message = current_millis + url
+    message = current_millis + url + body
     signature = hmac.new(secret.encode("utf-8"), message.encode("utf-8"), hashlib.sha256).hexdigest()
     headers = {
         "ACCESS-KEY": access_key,
