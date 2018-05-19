@@ -11,7 +11,7 @@ with open('LICENSE', encoding="utf-8") as f:
 
 setup(
     name='coincheck_api',
-    version='0.8.0',
+    version='0.8.1',
     description='A simple library to use CoinCheck API',
     long_description=readme,
     author='dakimura',

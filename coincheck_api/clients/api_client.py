@@ -12,6 +12,9 @@ logger = getLogger(__name__)
 class ApiClient:
     base_url = "https://coincheck.com"
 
+    def __init__(self):
+        pass
+
     def execute_http_call(self, path, method, headers=None, data=None):
         """
         :param path: API path (e.g. /api/ticker )

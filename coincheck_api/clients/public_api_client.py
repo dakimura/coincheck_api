@@ -5,6 +5,9 @@ from coincheck_api.exception import CoinCheckApiException
 
 class PublicApiClient(ApiClient):
 
+    def __init__(self):
+        pass
+
     def get_btc_ticker(self):
         """
         get ticker information of Bitcoin
