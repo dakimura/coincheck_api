@@ -39,5 +39,5 @@ class ApiClient:
         else:
             raise CoinCheckApiException(
                 "API execute failure. response status_code={}, headers={}, body={}".format(
-                    response.status_code, response.headers, response.content
+                    response.status_code, response.headers, response.content.decode('utf8')
                 ))
